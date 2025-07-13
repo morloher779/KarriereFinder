@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karriereberater</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-with-logo">
+            <img src="Logo_komplett_transparent.png" alt="Firmenlogo" class="header-logo">
+            <h1>Karriereberater</h1>
+            <div id="errorMessage">Bitte fülle alle Felder korrekt aus.</div>
+            <div id="intro" class="intro active">
+                <h2>Toll, dass du dich entschieden hast, dir Gedanken über deine Zukunft zu machen.</ h2>
+                    <p>Möchtest du erfahren, was wirklich zu dir passt?</p>
+                    <button id="startButton">Karrierewunsch erfahren</button>
+            </div>
+            <form id="careerForm">
+                <div class="form-group" id="question1">
+                    <label>Welchen Schulabschluss strebst du an? (1/6)</label>
+                    <input type="radio" name="ausbildung" value="qualifizierter Abschluss" id="abschluss_quali">
+                    qualifizierter Abschluss<br>
+                    <input type="radio" name="ausbildung" value="mittlere Reife" id="abschluss_mittlere"> mittlere
+                    Reife<br>
+                    <input type="radio" name="ausbildung" value="Fachabitur" id="abschluss_fachabi"> Fachabitur<br>
+                    <input type="radio" name="ausbildung" value="Abitur" id="abschluss_abi"> Allgemeines Abitur<br>
+                    <button type="button" id="next1">Weiter</button>
+                </div>
+
+                <div class="form-group" id="question2">
+                    <label>Was machst du in deiner Freizeit am liebsten? (2/6)</label>
+                    <textarea id="freizeitInput" rows="4" maxlength="200"
+                        placeholder="Beschreibe hier deine Lieblingsaktivitäten"></textarea>
+                    <div id="charCount">0/200 Zeichen</div>
+                    <button type="button" id="next2">Weiter</button>
+                </div>
+
+                <div class="form-group" id="question3">
+                    <label>Was findest du in der Schule am spannendsten? (Wähle bis zu 3) (3/6)</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="interests_checkbox" value="Mathe" id="skill_mathe"> Mathe<br>
+                        <input type="checkbox" name="interests_checkbox" value="Deutsch" id="skill_deutsch"> Deutsch<br>
+                        <input type="checkbox" name="interests_checkbox" value="Englisch" id="skill_englisch">
+                        Englisch<br>
+                        <input type="checkbox" name="interests_checkbox" value="Biologie" id="skill_biologie">
+                        Biologie<br>
+                        <input type="checkbox" name="interests_checkbox" value="Chemie" id="skill_chemie"> Chemie<br>
+                        <input type="checkbox" name="interests_checkbox" value="Physik" id="skill_physik"> Physik<br>
+                        <input type="checkbox" name="interests_checkbox" value="Geschichte" id="skill_geschichte">
+                        Geschichte<br>
+                        <input type="checkbox" name="interests_checkbox" value="Soziales" id="skill_soziales">
+                        Soziales<br>
+                        <input type="checkbox" name="interests_checkbox" value="Wirtschaft" id="skill_wirtschaft">
+                        Wirtschaft<br>
+                        <input type="checkbox" name="interests_checkbox" value="Informatik " id="skill_informatik ">
+                        Informatik<br>
+                        <input type="checkbox" name="interests_checkbox" value="Kunst" id="skill_kunst"> Kunst<br>
+                        <input type="checkbox" name="interests_checkbox" value="Musik" id="skill_musik"> Musik<br>
+                        <input type="checkbox" name="interests_checkbox" value="Sport" id="skill_sport"> Sport<br>
+                        <input type="checkbox" name="interests_checkbox" value="Religion / Ethik" id="skill_religion">
+                        Religion / Ethik<br>
+                        <input type="checkbox" name="interests_checkbox" value="Technik" id="skill_technik"> Technik<br>
+                    </div>
+                    <button type="button" id="next3">Weiter</button>
+                </div>
+
+                <div class="form-group" id="question4">
+                    <label>Worüber könntest du stundenlang reden? (4/6)</label>
+                    <textarea id="environmentInput" rows="4"
+                        placeholder="Welches deiner Hobbies fasziniert dich am meisten?"></textarea>
+                    <button type="button" id="next4">Weiter</button>
+                </div>
+
+                <div class="form-group" id="question5">
+                    <label for="ratingInput">Wie findest du Gruppenarbeiten? (5/6)</label>
+                    <input type="range" id="ratingInput" name="career_satisfaction" min="1" max="5" value="3">
+                    <div class="rating-labels">
+                        <span>Gar nicht gut (1)</span>
+                        <span>Sehr gut (5)</span>
+                    </div>
+                    <button type="button" id="next5">Weiter</button>
+                </div>
+
+                <div class="form-group" id="question6">
+                    <label>Möchtest du lieber eine Ausbildung, ein Studium oder direkt arbeiten? (6/6)</label>
+                    <input type="radio" name="beruf" value="Ausbildung" id="beruf_ausbildung"> Ausbildung<br>
+                    <input type="radio" name="beruf" value="Studium" id="beruf_studium"> Studium<br>
+                    <input type="radio" name="beruf" value="Arbeiten" id="beruf_arbeiten"> Direkt arbeiten<br>
+                    <button type="button" id="finish">Berufswunsch jetzt erfahren</button>
+                </div>
+            </form>
+            <div id="loading-overlay">
+                <div class="loading-animation">
+                    <div class="circle"></div>
+                    <div class="checkmark"></div>
+                </div>
+                <p>Wir suchen die beste Karriere für dich...</p>
+            </div>
+            <div class="result" id="result">
+                <h2>Dein vorgeschlagener Berufswunsch:</h2>
+                <p id="careerSuggestion"></p>
+                <div id="careerSuggestionContainer"></div>
+                <div class="button">
+                    <p><button id="declineButton">Beruf ablehnen</button></p>
+                    <p><button id="declineButton" onclick="window.location.reload()">Erneut starten</button></p>
+                </div>
+            </div>
+
+            <div id="reasonModal">
+                <div class="modal-content">
+                    <h3>Begründung eingeben</h3>
+                    <textarea id="reasonInput" rows="4"
+                        placeholder="Warum möchtest du diesen Beruf ablehnen?"></textarea>
+                    <button id="submitReasonButton">Begründung absenden (0/2)</button>
+                    <div id="reasonErrorMessage">Bitte gib eine Begründung ein.</div>
+                    <div>
+                        <button id="closeModalButton">Abbrechen</button>
+                    </div>
+                </div>
+                <div id="loading-overlay">
+                    <div class="loading-animation">
+                        <div class="circle"></div>
+                        <div class="checkmark"></div>
+                    </div>
+                    <p>Wir probieren es erneut für dich...</p>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="script.js"></script>
+</body>
+
+</html>

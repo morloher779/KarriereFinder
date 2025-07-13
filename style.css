@@ -1,0 +1,480 @@
+/* Grundlegendes Styling für den Body */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    /* Mindesthöhe des Viewports */
+    margin: 0;
+    background-color: #f4f4f4; /* Heller Hintergrund */
+    flex-direction: column;
+}
+
+/* Styling für das Formular selbst */
+#careerForm {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    /* Maximale Breite des Formulars */
+    box-sizing: border-box;
+    /* Padding und Border werden in die Gesamtbreite einbezogen */
+}
+
+/* Styling für jede Fragegruppe */
+.form-group {
+    margin-bottom: 25px;
+    /*text-align: center; /* Zentriert den Inhalt der Gruppe */
+}
+
+/* Styling für die Frage (Label) */
+.form-group label:not(.radio-options label) {
+    /* Selektiert nur das Haupt-Label */
+    font-weight: bold;
+    display: block;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    /* Etwas größere Schrift */
+    color: #333;
+    text-align: center;
+    /* Zentriert den Text der Frage */
+}
+
+/* Container für die Radio-Buttons zur besseren Ausrichtung */
+.radio-options {
+    text-align: left;
+    /* Zentriert die Radio-Buttons und ihren Text */
+    display: block;
+    /* Ermöglicht die Zentrierung des Blocks */
+    margin-left: auto;
+    /* Zentriert den Block horizontal */
+    margin-right: auto;
+    /* Zentriert den Block horizontal */
+    width: fit-content;
+    /* Passt die Breite an den Inhalt an */
+    max-width: 100%;
+    /* Verhindert, dass der Block breiter als der Container wird */
+    padding: 10px;
+    /* Fügt etwas Abstand um die Radio-Buttons hinzu */
+    background-color: #f9f9f9;
+    /* Heller Hintergrund für die Radio-Buttons */
+    border-radius: 5px;
+    /* Abgerundete Ecken für den Hintergrund */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Leichter Schatten für den Block */
+}
+
+/* Styling für individuelle Radio-Buttons und ihre Labels */
+.radio-options input[type="radio"] {
+    margin-right: 8rem;
+    /* Abstand zwischen Radio-Button und Text */
+    margin-bottom: 15rem;
+    transform: scale(1.2);
+    /* Macht die Radio-Buttons etwas größer */
+    vertical-align: middle;
+    /* Vertikale Ausrichtung mit dem Text */
+}
+
+.radio-options label {
+    display: inline-block;
+    /* Damit Label und Input nebeneinander bleiben */
+    margin-bottom: 15rem;
+    /* Abstand zwischen den Optionen */
+    font-size: 1.2em;
+    /* Etwas größere Schrift für bessere Lesbarkeit */
+    color: #555;
+    cursor: pointer;
+    padding: 2px 0;
+}
+
+/* Styling für den Button */
+#next1 {
+    display: block;
+    margin: 25px auto 0 auto;
+    /* Zentriert den Button mit Abstand oben */
+    padding: 12px 25px;
+    background-color: #077cba ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    /* Sanfter Übergang beim Hover */
+}
+
+#next1:hover {
+    background-color: #134b5f;
+    /* Dunklere Farbe beim Hover */
+}
+
+/* Styling für den Button */
+#next2 {
+    display: block;
+    margin: 25px auto 0 auto;
+    /* Zentriert den Button mit Abstand oben */
+    padding: 12px 25px;
+    background-color: #077cba ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    /* Sanfter Übergang beim Hover */
+}
+
+#next2:hover {
+    background-color: #134b5f;
+    /* Dunklere Farbe beim Hover */
+}
+
+/* Styling für den Button */
+#next3 {
+    display: block;
+    margin: 25px auto 0 auto;
+    /* Zentriert den Button mit Abstand oben */
+    padding: 12px 25px;
+    background-color: #077cba ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    /* Sanfter Übergang beim Hover */
+}
+
+#next3:hover {
+    background-color: #134b5f;
+    /* Dunklere Farbe beim Hover */
+}
+
+/* Styling für den Button */
+#next4 {
+    display: block;
+    margin: 25px auto 0 auto;
+    /* Zentriert den Button mit Abstand oben */
+    padding: 12px 25px;
+    background-color: #077cba ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    /* Sanfter Übergang beim Hover */
+}
+
+#next4:hover {
+    background-color: #134b5f;
+    /* Dunklere Farbe beim Hover */
+}
+
+/* Styling für den Button */
+#next5 {
+    display: block;
+    margin: 25px auto 0 auto;
+    /* Zentriert den Button mit Abstand oben */
+    padding: 12px 25px;
+    background-color: #077cba ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    /* Sanfter Übergang beim Hover */
+}
+
+#next5:hover {
+    background-color: #134b5f;
+    /* Dunklere Farbe beim Hover */
+}
+
+/* Styling für den Button */
+#finish {
+    display: block;
+    margin: 25px auto 0 auto;
+    /* Zentriert den Button mit Abstand oben */
+    padding: 12px 25px;
+    background-color: #077cba ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    /* Sanfter Übergang beim Hover */
+}
+
+#finish:hover {
+    background-color: #134b5f;
+    /* Dunklere Farbe beim Hover */
+}
+
+/* Stellt sicher, dass das Formular anfangs unsichtbar ist */
+#careerForm {
+    display: none;
+    /* Oder opacity: 0; visibility: hidden; je nach gewünschtem Übergang */
+}
+
+/* Macht das Intro-Div sichtbar, wenn es die Klasse 'active' hat */
+#intro.active {
+    display: block;
+    /* Oder flex, grid, etc. */
+}
+
+/* Macht die Formulargruppen unsichtbar, wenn sie NICHT die Klasse 'active' haben */
+.form-group:not(.active) {
+    display: none;
+}
+
+/* Macht die Formulargruppen sichtbar, wenn sie die Klasse 'active' haben */
+.form-group.active {
+    display: block;
+    /* Oder flex, grid, etc., je nachdem, wie du sie layoutest */
+}
+
+/* Stellt sicher, dass das Formular sichtbar wird, wenn es selbst die 'active' Klasse bekommt.
+   Diese Logik ist WICHTIG: Das JavaScript muss dem #careerForm auch die Klasse 'active' geben,
+   wenn der Start-Button gedrückt wird, oder zumindest es auf display: block setzen. */
+#careerForm.active {
+    display: block;
+    /* Oder flex, je nachdem, wie du es zentrierst */
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-with-logo {
+    display: flex; /* Aktiviert Flexbox für diesen Container */
+    align-items: center; /* Zentriert die Elemente vertikal in der Mitte */
+    justify-content: center; /* Zentriert Logo und Titel horizontal */
+    gap: 15px; /* Fügt einen Abstand zwischen Logo und Titel hinzu */
+    margin-bottom: 20px; /* Optional: Abstand unter dem Header-Bereich */
+    flex-wrap: wrap; /* Ermöglicht Umbruch bei kleineren Bildschirmen */
+}
+
+.header-logo {
+    width: 60px; /* Lege eine feste Breite für dein Logo fest. Spiele mit diesem Wert! */
+    height: auto; /* Behält das Seitenverhältnis bei */
+    opacity: 0.8; /* Mache das Logo leicht transparent, spiele mit dem Wert (0.1 bis 1) */
+}
+
+/* Optional: Passe das h1-Styling an, falls nötig */
+.header-with-logo h1 {
+    font-size: 2.5em; /* Beispiel: Größe der Überschrift */
+    color: #077cba ; /* Beispiel: Farbe der Überschrift */
+    margin: 0; /* Entfernt Standard-Margin des h1, um Flexbox-Gap besser zu nutzen */
+    padding: 0;
+    text-align: center;
+}
+
+h1,
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.intro,
+.form-group,
+.result {
+    margin-bottom: 20px;
+    display: none;
+}
+
+.intro.active,
+.result.active {
+    display: block;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+button {
+    display: inline-block;
+    background-color: #077cba ;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 2rem;
+}
+
+button:hover {
+    background-color: #134b5f;
+}
+
+#declineButton {
+    display: block;
+    margin: 25px auto 0 auto;
+    /* Zentriert den Button mit Abstand oben */
+    padding: 12px 25px;
+    background-color: #077cba ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    /* Sanfter Übergang beim Hover */
+}
+
+#declineButton:hover {
+    background-color: #134b5f;
+}
+
+#errorMessage {
+    color: red;
+    font-weight: bold;
+    display: none;
+    text-align: center;
+}
+
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10000;
+}
+
+.loading-animation {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.circle {
+    width: 100%;
+    height: 100%;
+    border: 4px solid transparent;
+    border-top: 4px solid #077cba ;
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+}
+
+.checkmark {
+    position: absolute;
+    width: 25px;
+    height: 50px;
+    border: solid #077cba ;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg) scale(0);
+    top: 15%;
+    left: 35%;
+    animation: checkmark 0.7s ease 1.5s forwards;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        transform: rotate(45deg) scale(0);
+    }
+
+    100% {
+        transform: rotate(45deg) scale(1);
+    }
+}
+
+#reasonModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+#careerSuggestionContainer h3 {
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+}
+
+#careerSuggestionContainer p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+#careerSuggestionContainer ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+#careerSuggestionContainer li {
+    margin-bottom: 5px;
+}
+
+/* Optional: Für Code-Blöcke, falls die KI mal welchen generiert */
+#careerSuggestionContainer pre {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 10px;
+    overflow-x: auto;
+}
+
+#careerSuggestionContainer code {
+    font-family: monospace;
+    background-color: #eee;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
