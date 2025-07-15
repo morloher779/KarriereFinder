@@ -1,3 +1,4 @@
+//TODO: - npm install bcryptjs jsonwebtoken better-sqlite3
 // Backend
 require('dotenv').config(); 
 
