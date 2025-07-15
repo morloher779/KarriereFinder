@@ -1,4 +1,4 @@
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
     // --- DOM-Elemente abrufen ---
     const reasonModal = document.getElementById('reasonModal');
     const declineButton = document.getElementById('declineButton');
@@ -146,6 +146,7 @@ window.onload = () => {
 
     // Logik für den Begründungs-Button (submitReasonButton) anpassen
     submitReasonButton.addEventListener('click', async () => {
+        if (isButtonDisabled) return;
 
         const reason = reasonInput.value.trim();
 
@@ -169,17 +170,31 @@ window.onload = () => {
             const data = collectFormData(); // Sammle alle aktuellen Daten
             data.reason = reason; // Füge die Begründung hinzu
 
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Sitzung abgelaufen oder nicht angemeldet. Bitte melde dich erneut an.');
+                window.location.href = '/login.html';
+                return;
+            }
+
             try {
                 // Sende die Daten inklusive Begründung an dein Backend
                 const response = await fetch('/career-suggestion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(data),
             });
 
                 if (!response.ok) {
+                    if (response.status === 401 || response.status === 403) {
+                        alert('Sitzung abgelaufen oder nicht autorisiert. Bitte melde dich erneut an.');
+                        localStorage.removeItem('token');
+                        window.location.href = '/login.html';
+                        return;
+                    }
                     const errorData = await response.json();
                     throw new Error(`Serverfehler: ${errorData.error || response.statusText}`);
                 }
@@ -367,19 +382,33 @@ window.onload = () => {
         document.getElementById('careerForm').classList.remove('active'); // Oder setze direkt style.display = 'none';
         loadingOverlay.style.display = 'flex'; // Lade-Overlay anzeigen
 
+        const token = localStorage.getItem('token'); // Token aus dem Local Storage holen
+        if (!token) {
+            alert('Sitzung abgelaufen oder nicht angemeldet. Bitte melde dich erneut an.');
+            window.location.href = '/login.html';
+            return;
+        }
+
         try {
             // Sende Daten an deinen eigenen Backend-Server
             const response = await fetch('/career-suggestion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(data),
             });
 
             if (!response.ok) {
-                // Wenn die Antwort nicht OK ist (z.B. 400 oder 500 Fehler), werfe einen Fehler
-                const errorData = await response.json(); // Versuche, die Fehlermeldung vom Server zu lesen
+                // Hier spezifische Behandlung für 401/403 Fehlern
+                if (response.status === 401 || response.status === 403) {
+                    alert('Sitzung abgelaufen oder nicht autorisiert. Bitte melde dich erneut an.');
+                    localStorage.removeItem('token'); // Ungültiges Token entfernen
+                    window.location.href = '/login.html';
+                    return; // Wichtig, um weiteren Codeausführung zu stoppen
+                }
+                const errorData = await response.json();
                 throw new Error(`Serverfehler: ${errorData.error || response.statusText}`);
             }
 
@@ -402,4 +431,4 @@ window.onload = () => {
         }
     };
 
-};
+}); // Ende des DOMContentLoaded-Events

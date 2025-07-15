@@ -1,4 +1,4 @@
-// Lade Umgebungsvariablen aus der .env-Datei am Anfang
+// Backend
 require('dotenv').config(); 
 
 const express = require('express');
@@ -6,9 +6,13 @@ const cors = require('cors');
 const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-const app = express();
-const port = 3001; // Wähle einen Port, der nicht von deinem Frontend belegt ist (z.B. 3001, wenn Frontend auf 3000 läuft)
+// Importe für Authentifizierung
+require('./db'); // Initialisiere die Datenbank
+const authRoutes = require('./routes/authRoutes');
+const authenticateToken = require('./middleware/authMiddleware');
 
+const app = express();
+const port = process.env.PORT || 3001;
 // WICHTIG: Hole deinen API-Key aus den Umgebungsvariablen
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY; 
 
@@ -34,11 +38,13 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
-// POST-Route für die Karriereberatung
-app.post('/career-suggestion', async (req, res) => {
-    try {
-        const formData = req.body; // Die gesammelten Daten vom Frontend
+// --- Authentifizierungs-Routen ---
+app.use('/api/auth', authRoutes); // Alle Auth-Routen unter /api/auth
 
+// POST-Route für die Karriereberatung
+app.post('/api/career-suggestion', authenticateToken, async (req, res) => { // authenticateToken als Middleware hinzufügen
+    try {
+        const formData = req.body;
         // Erstelle den Prompt für das Gemini-Modell
         const prompt = `
             Gib mir drei Berufsvorschläge, die möglichst auf folgende Interessen, Hobbies und Präferenzen abgestimmt sind.
@@ -67,6 +73,16 @@ app.post('/career-suggestion', async (req, res) => {
         // Sende eine Fehlerantwort an das Frontend
         res.status(500).json({ error: 'Fehler beim Abrufen des Berufsvorschlags. Bitte versuchen Sie es später erneut.' });
     }
+});
+
+// --- Geschützte Route für das Tool-HTML ---
+app.get('/career-finder', authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'career-finder.html'));
+});
+
+// Catch-all für 404 (optional, muss zuletzt stehen)
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, '..', 'public', '404.html')); // Wenn du eine 404.html hast
 });
 
 // Server starten
