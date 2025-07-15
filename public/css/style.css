@@ -1,3 +1,19 @@
+:root {
+    --primary-color: #077cba; /* Standard-Blau, bitte mit deiner Primärfarbe ersetzen! */
+    --secondary-color: #007bff; /* Akzentfarbe */
+    --background-light: #f9f9f9; /* Standard-Hintergrundfarbe */
+    --text-color-dark: #333;
+    --text-color-medium: #555;
+    --text-color-light: #6c757d;
+    --border-light: #eee;
+    --border-medium: #ccc;
+    --success-bg: #d4edda;
+    --success-border: #c3e6cb;
+    --success-text: #155724;
+    --error-bg: #f8d7da;
+    --error-border: #f5c6cb;
+    --error-text: #721c24;
+}
 /* Grundlegendes Styling für den Body */
 body {
     font-family: Arial, sans-serif;
@@ -319,6 +335,7 @@ button {
     display: inline-block;
     background-color: #077cba ;
     color: white;
+    margin: 25px auto 0 auto;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -466,7 +483,7 @@ button:hover {
 
 /* Optional: Für Code-Blöcke, falls die KI mal welchen generiert */
 #careerSuggestionContainer pre {
-    background-color: #f4f4f4;
+    background-color: #f9f9f9;
     border: 1px solid #ddd;
     padding: 10px;
     overflow-x: auto;
@@ -483,7 +500,7 @@ button:hover {
 nav {
     margin-top: 20px;
     margin-bottom: 30px;
-    background-color: #f0f0f0;
+    background-color: #f9f9f9;
     padding: 10px 0;
     border-radius: 5px;
 }
@@ -499,7 +516,7 @@ nav ul {
 
 nav ul li a {
     text-decoration: none;
-    color: #007bff;
+    color: #077cba;
     font-weight: bold;
     padding: 5px 10px;
     border-radius: 3px;
@@ -507,13 +524,13 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #e0f0ff;
+    background-color: #f9f9f9;
 }
 
 /* --- Hero Section (Landingpage) --- */
 .hero-section {
     padding: 50px 20px;
-    background-color: #007bff;
+    background-color: #077cba;
     color: white;
     border-radius: 8px;
     margin-bottom: 30px;
@@ -534,10 +551,11 @@ nav ul li a:hover {
 /* --- Call to Action Section (Landingpage) --- */
 .call-to-action {
     padding: 40px 20px;
-    background-color: #f8f9fa;
+    background-color: #f9f9f9;
     border: 1px solid #e9ecef;
     border-radius: 8px;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .call-to-action h2 {
@@ -553,7 +571,7 @@ nav ul li a:hover {
 }
 
 .call-to-action button {
-    background-color: #28a745;
+    background-color: #077cba;
     color: white;
     padding: 15px 30px;
     border: none;
@@ -564,7 +582,7 @@ nav ul li a:hover {
 }
 
 .call-to-action button:hover {
-    background-color: #218838;
+    background-color: #077cba;
 }
 
 /* --- Form Sections (Login, Register) --- */
@@ -601,7 +619,7 @@ nav ul li a:hover {
     width: 100%;
     padding: 12px;
     font-size: 1.1em;
-    background-color: #007bff;
+    background-color: #077cba;
 }
 
 .form-section button[type="submit"]:hover {
@@ -615,7 +633,7 @@ nav ul li a:hover {
 }
 
 .form-section p a {
-    color: #007bff;
+    color: #077cba;
     text-decoration: none;
 }
 
@@ -632,15 +650,15 @@ nav ul li a:hover {
 }
 
 .message[style*="green"] { /* Styling für grüne Erfolgsmeldungen */
-    background-color: #d4edda;
+    background-color: #f9f9f9;
     border: 1px solid #c3e6cb;
-    color: #155724;
+    color: #077cba;
 }
 
 .message[style*="red"] { /* Styling für rote Fehlermeldungen */
-    background-color: #f8d7da;
+    background-color: #f9f9f9;
     border: 1px solid #f5c6cb;
-    color: #721c24;
+    color: #077cba;
 }
 
 .payment-info {
