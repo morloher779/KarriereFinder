@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
@@ -23,6 +24,15 @@ const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 // Middleware
 app.use(cors()); // Erlaubt Cross-Origin-Anfragen von deinem Frontend
 app.use(express.json()); // Ermöglicht das Parsen von JSON im Request-Body
+
+// --- Frontend-Dateien bereitstellen ---
+// Statische Dateien aus dem 'public'-Ordner servieren
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
+// Haupt-Route für die index.html, wenn jemand die Basis-URL aufruft
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
 
 // POST-Route für die Karriereberatung
 app.post('/career-suggestion', async (req, res) => {

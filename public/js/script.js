@@ -171,13 +171,13 @@ window.onload = () => {
 
             try {
                 // Sende die Daten inklusive Begründung an dein Backend
-                const response = await fetch('http://localhost:3001/career-suggestion', { // PASSE DEN PORT AN!
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
+                const response = await fetch('/career-suggestion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
 
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -369,7 +369,7 @@ window.onload = () => {
 
         try {
             // Sende Daten an deinen eigenen Backend-Server
-            const response = await fetch('http://localhost:3001/career-suggestion', { // PASSE DEN PORT AN!
+            const response = await fetch('/career-suggestion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
