@@ -7,14 +7,8 @@ const cors = require('cors');
 const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-// Importe für Authentifizierung
-require('./db'); // Initialisiere die Datenbank
-const authRoutes = require('./routes/authRoutes');
-const authenticateToken = require('./middleware/authMiddleware');
-
 const app = express();
 const port = process.env.PORT || 3001;
-// WICHTIG: Hole deinen API-Key aus den Umgebungsvariablen
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY; 
 
 // Überprüfe, ob der API-Key gesetzt ist
@@ -39,11 +33,29 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
-// --- Authentifizierungs-Routen ---
-app.use('/api/auth', authRoutes); // Alle Auth-Routen unter /api/auth
+// Backend-Endpunkt für die Passwortprüfung
+app.post('/api/login', (req, res) => {
+    // ACHTUNG: Captcha hier noch nicht überprüft, da das im Frontend generiert wird.
+    // In einer realen Anwendung würde man hier ein Backend-basiertes Captcha-System nutzen.
+    const { password } = req.body;
+    
+    // Das geheime Passwort ist nur hier im Backend bekannt!
+    const CORRECT_PASSWORD = process.env.ACCESS_PASSWORD;
+
+    if (!CORRECT_PASSWORD) {
+        console.error("FEHLER: ACCESS_PASSWORD ist nicht in den Umgebungsvariablen gesetzt.");
+        return res.status(500).json({ success: false, message: 'Serverfehler: Passwort nicht konfiguriert.' });
+    }
+
+    if (password === CORRECT_PASSWORD) {
+        res.status(200).json({ success: true });
+    } else {
+        res.status(401).json({ success: false, message: 'Ungültiges Passwort.' });
+    }
+});
 
 // POST-Route für die Karriereberatung
-app.post('/api/career-suggestion', authenticateToken, async (req, res) => { // authenticateToken als Middleware hinzufügen
+app.post('/api/career-suggestion', async (req, res) => { // authenticateToken als Middleware hinzufügen
     try {
         const formData = req.body;
         // Erstelle den Prompt für das Gemini-Modell
@@ -77,16 +89,17 @@ app.post('/api/career-suggestion', authenticateToken, async (req, res) => { // a
 });
 
 // --- Geschützte Route für das Tool-HTML ---
-app.get('/career-finder', authenticateToken, (req, res) => {
+/*app.get('/career-finder', authenticateToken, (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'career-finder.html'));
 });
 
 // Catch-all für 404 (optional, muss zuletzt stehen)
 app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, '..', 'public', '404.html')); // Wenn du eine 404.html hast
-});
+});*/
 
 // Server starten
 app.listen(port, () => {
-    console.log(`Backend-Server läuft auf http://localhost:${port}`);
+    console.log(`Server läuft auf http://localhost:${port}`);
+    console.log(`Frontend verfügbar unter http://localhost:${port}`);
 });

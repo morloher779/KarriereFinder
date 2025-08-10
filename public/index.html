@@ -1,37 +1,110 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KI-Karriereberater - Dein Weg zur Traumkarriere</title>
+    <title>Login - KarriereFinder</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+
     <div class="container">
         <div class="header-with-logo">
             <img src="images/Logo_komplett_transparent.png" alt="Firmenlogo" class="header-logo">
-            <h1>KI-Karriereberater</h1>
+            <h1>Zugang zum KarriereFinder</h1>
         </div>
 
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/login.html">Login</a></li>
-                <li><a href="/register.html">Registrieren</a></li>
-                </ul>
-        </nav>
+        <div class="form-section login-form">
+            <h2>Passwort erforderlich</h2>
+            <div id="loginMessage" class="message"></div>
+            <form id="passwordForm">
+                <label for="password">Passwort:</label>
+                <input type="password" id="password" required>
 
-        <section class="hero-section">
-            <h2>Finde deine wahre Berufung.</h2>
-            <p>Unser KI-gestützter Karriereberater analysiert deine Interessen, Fähigkeiten und Wünsche, um dir den idealen Berufsweg aufzuzeigen. Entdecke Potenziale, von denen du nicht wusstest, dass du sie hast.</p>
-        </section>
+                <div class="captcha-container">
+                    <label for="captcha">Geben Sie den Text ein:</label>
+                    <div class="captcha-image">
+                        <span id="captchaText"></span>
+                    </div>
+                    <input type="text" id="captcha" placeholder="Captchacode eingeben" required>
+                </div>
 
-        <section class="call-to-action">
-            <h2>Bist du bereit für den nächsten Schritt?</h2>
-            <p>Hier geht es zu deinem persönlichen **KarriereFinder** – deinem Schlüssel zur beruflichen Zukunft.</p>
-            <button id="goToCareerFinder">Jetzt starten!</button>
-        </section>
+                <button type="submit">Zugang gewähren</button>
+            </form>
+        </div>
     </div>
 
-    <script src="js/main.js"></script> </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordForm = document.getElementById('passwordForm');
+            const passwordInput = document.getElementById('password');
+            const captchaInput = document.getElementById('captcha');
+            const captchaTextSpan = document.getElementById('captchaText');
+            const loginMessage = document.getElementById('loginMessage');
+
+            let captchaValue = '';
+
+            const generateCaptcha = () => {
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let result = '';
+                for (let i = 0; i < 6; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                return result;
+            };
+
+            const loadCaptcha = () => {
+                captchaValue = generateCaptcha();
+                captchaTextSpan.textContent = captchaValue;
+            };
+
+            loadCaptcha();
+
+            passwordForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const enteredPassword = passwordInput.value;
+                const enteredCaptcha = captchaInput.value;
+
+                // Zuerst das Captcha lokal prüfen
+                if (enteredCaptcha !== captchaValue) {
+                    loginMessage.textContent = 'Das Captcha ist falsch.';
+                    loginMessage.style.color = 'red';
+                    captchaInput.value = '';
+                    loadCaptcha();
+                    return;
+                }
+
+                try {
+                    // NEU: Sende das Passwort an den Backend-Endpunkt
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ password: enteredPassword })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) { // Überprüft, ob der Statuscode 200 ist
+                        window.location.href = 'career-finder.html';
+                    } else {
+                        loginMessage.textContent = data.message || 'Anmeldung fehlgeschlagen.';
+                        loginMessage.style.color = 'red';
+                        passwordInput.value = '';
+                        captchaInput.value = '';
+                        loadCaptcha();
+                    }
+                } catch (error) {
+                    console.error('Fehler bei der Verbindung zum Server:', error);
+                    loginMessage.textContent = 'Verbindungsfehler. Server nicht erreichbar.';
+                    loginMessage.style.color = 'red';
+                }
+            });
+        });
+    </script>
+
+</body>
+
 </html>
