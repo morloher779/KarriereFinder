@@ -667,3 +667,49 @@ nav ul li a:hover {
     text-align: center;
     margin-bottom: 15px;
 }
+
+/* --- Neue Styles für das Captcha --- */
+.captcha-container {
+    margin-top: 15px;
+    margin-bottom: 20px; /* Mehr Platz nach unten */
+    display: flex;
+    flex-direction: column; /* Elemente untereinander anordnen */
+    align-items: center; /* Alles horizontal zentrieren */
+}
+
+.captcha-container label {
+    text-align: center;
+    font-size: 1em;
+    color: var(--text-color-dark);
+}
+
+.captcha-image {
+    background-color: var(--background-light); /* Helles Grau als Hintergrund */
+    border: 2px dashed var(--border-medium); /* Ein gestrichelter Rand wirkt moderner */
+    border-radius: 8px; /* Abgerundete Ecken */
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: inline-block;
+    font-size: 2em; /* Größere Schrift */
+    font-family: 'Courier New', Courier, monospace; /* Festere, gut lesbare Schriftart */
+    font-style: italic; /* Kursive Schrift für einen "gekritzelten" Look */
+    letter-spacing: 5px;
+    color: var(--primary-color); /* Deine Primärfarbe als Captcha-Textfarbe */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Leichter Schatten für Tiefe */
+    user-select: none;
+    transform: rotate(-2deg); /* Leichte Drehung für einen dynamischen Effekt */
+    transition: transform 0.3s ease; /* Übergang für Hover-Effekt */
+}
+
+.captcha-image:hover {
+    transform: rotate(0deg); /* Drehung bei Hover aufheben */
+}
+
+/* Stil für das Eingabefeld unter dem Captcha */
+.captcha-container input[type="text"] {
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+    text-transform: uppercase; /* Eingabe in Großbuchstaben, damit sie besser zum Captcha passt */
+}
