@@ -1,10 +1,12 @@
 //TODO: - npm install bcryptjs jsonwebtoken better-sqlite3
+//.     - npm install express-session
 // Backend
 require('dotenv').config(); 
 
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const session = require('express-session');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
@@ -19,13 +21,30 @@ if (!GEMINI_API_KEY) {
 }
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const ACCESS_PASSWORD = process.env.ACCESS_PASSWORD; // Passwort aus .env laden
 
 // Middleware
 app.use(cors()); // Erlaubt Cross-Origin-Anfragen von deinem Frontend
 app.use(express.json()); // Ermöglicht das Parsen von JSON im Request-Body
 
+app.use(session({
+    secret: process.env.JWT_SECRET, // Ein geheimes Passwort für die Session-Verschlüsselung
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 600000 } // Session läuft nach 10 Minuten (600000ms) ab
+}));
+
+const checkAuth = (req, res, next) => {
+    if (req.session.authenticated) {
+        next(); // Benutzer ist authentifiziert, fortfahren
+    } else {
+        // Nicht authentifizierte Benutzer zurück zur Startseite leiten
+        res.redirect('/');
+    }
+};
+
 // --- Frontend-Dateien bereitstellen ---
-// Statische Dateien aus dem 'public'-Ordner servieren
+app.use('/career-finder.html', checkAuth); // <-- Hier wird die Middleware für die spezifische Seite aufgerufen
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Haupt-Route für die index.html, wenn jemand die Basis-URL aufruft
@@ -35,19 +54,11 @@ app.get('/', (req, res) => {
 
 // Backend-Endpunkt für die Passwortprüfung
 app.post('/api/login', (req, res) => {
-    // ACHTUNG: Captcha hier noch nicht überprüft, da das im Frontend generiert wird.
-    // In einer realen Anwendung würde man hier ein Backend-basiertes Captcha-System nutzen.
     const { password } = req.body;
-    
-    // Das geheime Passwort ist nur hier im Backend bekannt!
-    const CORRECT_PASSWORD = process.env.ACCESS_PASSWORD;
+    const ACCESS_PASSWORD = process.env.ACCESS_PASSWORD;
 
-    if (!CORRECT_PASSWORD) {
-        console.error("FEHLER: ACCESS_PASSWORD ist nicht in den Umgebungsvariablen gesetzt.");
-        return res.status(500).json({ success: false, message: 'Serverfehler: Passwort nicht konfiguriert.' });
-    }
-
-    if (password === CORRECT_PASSWORD) {
+    if (password === ACCESS_PASSWORD) {
+        req.session.authenticated = true; // NEU: Session-Variable setzen
         res.status(200).json({ success: true });
     } else {
         res.status(401).json({ success: false, message: 'Ungültiges Passwort.' });

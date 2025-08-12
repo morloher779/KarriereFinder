@@ -711,5 +711,4 @@ nav ul li a:hover {
     width: 100%;
     max-width: 250px;
     text-align: center;
-    text-transform: uppercase; /* Eingabe in Großbuchstaben, damit sie besser zum Captcha passt */
 }

@@ -170,31 +170,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = collectFormData(); // Sammle alle aktuellen Daten
             data.reason = reason; // Füge die Begründung hinzu
 
-            const token = localStorage.getItem('token');
-            if (!token) {
-                alert('Sitzung abgelaufen oder nicht angemeldet. Bitte melde dich erneut an.');
-                window.location.href = '/login.html';
-                return;
-            }
+            //const token = localStorage.getItem('token');
 
             try {
                 // Sende die Daten inklusive Begründung an dein Backend
-                const response = await fetch('/career-suggestion', {
+                const response = await fetch('/api/career-suggestion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    //'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(data),
             });
 
                 if (!response.ok) {
-                    if (response.status === 401 || response.status === 403) {
+                    /*if (response.status === 401 || response.status === 403) {
                         alert('Sitzung abgelaufen oder nicht autorisiert. Bitte melde dich erneut an.');
                         localStorage.removeItem('token');
                         window.location.href = '/login.html';
                         return;
-                    }
+                    }*/
                     const errorData = await response.json();
                     throw new Error(`Serverfehler: ${errorData.error || response.statusText}`);
                 }
@@ -381,33 +376,33 @@ document.addEventListener('DOMContentLoaded', () => {
         formGroups[formGroups.length - 1].classList.remove('active');
         document.getElementById('careerForm').classList.remove('active'); // Oder setze direkt style.display = 'none';
         loadingOverlay.style.display = 'flex'; // Lade-Overlay anzeigen
-
+/*
         const token = localStorage.getItem('token'); // Token aus dem Local Storage holen
         if (!token) {
             alert('Sitzung abgelaufen oder nicht angemeldet. Bitte melde dich erneut an.');
             window.location.href = '/login.html';
             return;
         }
-
+*/
         try {
             // Sende Daten an deinen eigenen Backend-Server
-            const response = await fetch('/career-suggestion', {
+            const response = await fetch('/api/career-suggestion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    //'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(data),
             });
 
             if (!response.ok) {
                 // Hier spezifische Behandlung für 401/403 Fehlern
-                if (response.status === 401 || response.status === 403) {
+                /*if (response.status === 401 || response.status === 403) {
                     alert('Sitzung abgelaufen oder nicht autorisiert. Bitte melde dich erneut an.');
                     localStorage.removeItem('token'); // Ungültiges Token entfernen
                     window.location.href = '/login.html';
                     return; // Wichtig, um weiteren Codeausführung zu stoppen
-                }
+                }*/
                 const errorData = await response.json();
                 throw new Error(`Serverfehler: ${errorData.error || response.statusText}`);
             }

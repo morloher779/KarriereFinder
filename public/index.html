@@ -1,3 +1,4 @@
+TODO: korrekte weiterleitung zu career-finder.html (window.reload funktioniert nicht)
 <!DOCTYPE html>
 <html lang="de">
 
@@ -68,7 +69,6 @@
                 const enteredPassword = passwordInput.value;
                 const enteredCaptcha = captchaInput.value;
 
-                // Zuerst das Captcha lokal prüfen
                 if (enteredCaptcha !== captchaValue) {
                     loginMessage.textContent = 'Das Captcha ist falsch.';
                     loginMessage.style.color = 'red';
@@ -78,7 +78,6 @@
                 }
 
                 try {
-                    // NEU: Sende das Passwort an den Backend-Endpunkt
                     const response = await fetch('/api/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -87,7 +86,9 @@
 
                     const data = await response.json();
 
-                    if (response.ok) { // Überprüft, ob der Statuscode 200 ist
+                    if (response.ok) {
+                        // NEU: Anstatt direkt weiterzuleiten, die Seite neu laden.
+                        // Der Server wird jetzt die Weiterleitung übernehmen.
                         window.location.href = 'career-finder.html';
                     } else {
                         loginMessage.textContent = data.message || 'Anmeldung fehlgeschlagen.';
