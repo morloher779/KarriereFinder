@@ -39,6 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentQuestionIndex = 0; // Index der aktuell angezeigten Frage
 
+    // HIER WIRD DIE VARIABLE KORREKT DEKLARIERT
+    let isButtonDisabled = false;
+    let clickCounter = 0;
+    const maxClicks = 2;
+
+
     // --- Initialisierungs-Checks (optional, aber gut für Debugging) ---
     if (!reasonModal || !declineButton || !closeModalButton || !submitReasonButton || !reasonInput ||
         !freizeitInput || !charCount || !intro || !resultDiv || !careerSuggestion || !errorMessage ||
@@ -76,8 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Zähler und Deaktivierung für den Begründungs-Button (bestehende Logik) ---
-    let clickCounter = 0;
-    const maxClicks = 2;
 
     function increaseCounter() {
         if (clickCounter >= maxClicks) {
