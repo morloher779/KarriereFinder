@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM-Elemente abrufen ---
     const reasonModal = document.getElementById('reasonModal');
     const declineButton = document.getElementById('declineButton');
+    const restartButton = document.getElementById('restartButton');
     const closeModalButton = document.getElementById('closeModalButton');
     const submitReasonButton = document.getElementById('submitReasonButton');
     const reasonInput = document.getElementById('reasonInput');
