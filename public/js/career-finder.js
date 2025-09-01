@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const careerSuggestion = document.getElementById('careerSuggestion');
     const errorMessage = document.getElementById('errorMessage');
     const loadingOverlay = document.getElementById('loading-overlay');
-    const apiKey = "fehlt!";
 
     let currentQuestionIndex = 0;
 
@@ -145,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data.reason = reason;
 
             try {
-                const response = await fetch('/career-suggestion', {
+                const response = await fetch('/api/career-suggestion', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -309,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingOverlay.style.display = 'flex';
 
         try {
-            const response = await fetch('/career-suggestion', {
+            const response = await fetch('/api/career-suggestion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
