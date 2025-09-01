@@ -66,7 +66,7 @@ app.post('/api/login', (req, res) => {
 });
 
 // POST-Route für die Karriereberatung
-app.post('/api/career-suggestion', async (req, res) => { // authenticateToken als Middleware hinzufügen
+app.post('/career-suggestion', async (req, res) => { // authenticateToken als Middleware hinzufügen
     try {
         const formData = req.body;
         // Erstelle den Prompt für das Gemini-Modell
