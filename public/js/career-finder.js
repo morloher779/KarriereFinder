@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const careerSuggestion = document.getElementById('careerSuggestion');
     const errorMessage = document.getElementById('errorMessage');
     const loadingOverlay = document.getElementById('loading-overlay');
+    const apiKey = "fehlt!";
 
     let currentQuestionIndex = 0;
 
