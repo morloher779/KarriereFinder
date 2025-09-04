@@ -712,3 +712,46 @@ nav ul li a:hover {
     max-width: 250px;
     text-align: center;
 }
+
+/* Cookie-Modal Styling */
+.cookie-modal {
+    display: none; /* Standardmäßig versteckt */
+    position: fixed; /* Bleibt an Ort und Stelle */
+    z-index: 1000; /* Stellt sicher, dass es über allem anderen liegt */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Leichter, dunkler Hintergrund */
+    justify-content: center;
+    align-items: center;
+}
+
+.cookie-modal .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.cookie-modal h3 {
+    margin-top: 0;
+}
+
+#acceptCookiesButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#acceptCookiesButton:hover {
+    background-color: #0056b3;
+}
