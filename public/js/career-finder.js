@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/track-visit', { method: 'POST' })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Fehler beim Protokollieren des Besuchs.');
+            }
+        })
+        .catch(error => console.error('Fehler beim Senden der Besuchsdaten:', error));
+
     // --- DOM-Elemente abrufen ---
     const reasonModal = document.getElementById('reasonModal');
     const declineButton = document.getElementById('declineButton');
