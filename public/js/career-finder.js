@@ -1,44 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const cookieModal = document.getElementById('cookieModal');
-    const acceptCookiesButton = document.getElementById('acceptCookiesButton');
-
-    // Funktion, um den Besuch zu protokollieren
-    const trackVisit = () => {
-        fetch('/api/track-visit', { method: 'POST' })
-            .then(response => {
-                if (!response.ok) {
-                    console.error('Fehler beim Protokollieren des Besuchs.');
-                }
-            })
-            .catch(error => console.error('Fehler beim Senden der Besuchsdaten:', error));
-    };
-
-    // Prüfe, ob das "cookie_accepted"-Cookie gesetzt ist
-    const hasAcceptedCookies = document.cookie.split(';').some((item) => item.trim().startsWith('cookie_accepted=true'));
-
-    if (hasAcceptedCookies) {
-        // Wenn der Nutzer bereits akzeptiert hat, tracke den Besuch sofort
-        trackVisit();
-    } else {
-        // Wenn nicht, zeige das Modal an und warte auf die Zustimmung
-        cookieModal.style.display = 'flex';
-    }
-
-    // Event-Listener für den "Einverstanden"-Button
-    acceptCookiesButton.addEventListener('click', () => {
-        // Setze ein Cookie, das in 1 Jahr abläuft
-        const d = new Date();
-        d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-        let expires = "expires="+d.toUTCString();
-        document.cookie = "cookie_accepted=true;" + expires + ";path=/";
-
-        // Verstecke das Modal
-        cookieModal.style.display = 'none';
-
-        // Starte das Tracking des Besuchs
-        trackVisit();
-    });
+    fetch('/api/track-visit', { method: 'POST' })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Fehler beim Protokollieren des Besuchs.');
+            }
+        })
+        .catch(error => console.error('Fehler beim Senden der Besuchsdaten:', error));
 
     // --- DOM-Elemente abrufen ---
     const reasonModal = document.getElementById('reasonModal');
