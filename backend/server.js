@@ -92,52 +92,43 @@ app.post('/api/track-visit', (req, res) => {
     }
 });
 
-// --- API-Endpunkt für Berufsvorschläge ---
-app.post('/api/career-suggestion', async (req, res) => {
-    const formData = req.body;
-
-    // Einfache Überprüfung, ob der Body Daten enthält
-    if (!formData || Object.keys(formData).length === 0) {
-        return res.status(400).json({ error: 'Ungültige Anfrage: Body fehlt oder ist leer.' });
+const checkAuth = (req, res, next) => {
+    if (req.session.authenticated) {
+        next(); // Benutzer ist authentifiziert, fortfahren
+    } else {
+        // Nicht authentifizierte Benutzer zurück zur Startseite leiten
+        res.redirect('/');
     }
+};
 
-    const checkAuth = (req, res, next) => {
-        if (req.session.authenticated) {
-            next(); // Benutzer ist authentifiziert, fortfahren
-        } else {
-            // Nicht authentifizierte Benutzer zurück zur Startseite leiten
-            res.redirect('/');
-        }
-    };
+// --- Frontend-Dateien bereitstellen ---
+app.use('/career-finder.html', checkAuth); // <-- Hier wird die Middleware für die spezifische Seite aufgerufen
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
-    // --- Frontend-Dateien bereitstellen ---
-    app.use('/career-finder.html', checkAuth); // <-- Hier wird die Middleware für die spezifische Seite aufgerufen
-    app.use(express.static(path.join(__dirname, '..', 'public')));
+// Haupt-Route für die index.html, wenn jemand die Basis-URL aufruft
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
 
-    // Haupt-Route für die index.html, wenn jemand die Basis-URL aufruft
-    app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-    });
+// Backend-Endpunkt für die Passwortprüfung
+app.post('/api/login', (req, res) => {
+    const { password } = req.body;
+    const ACCESS_PASSWORD = process.env.ACCESS_PASSWORD;
 
-    // Backend-Endpunkt für die Passwortprüfung
-    app.post('/api/login', (req, res) => {
-        const { password } = req.body;
-        const ACCESS_PASSWORD = process.env.ACCESS_PASSWORD;
+    if (password === ACCESS_PASSWORD) {
+        req.session.authenticated = true; // NEU: Session-Variable setzen
+        res.status(200).json({ success: true });
+    } else {
+        res.status(401).json({ success: false, message: 'Ungültiges Passwort.' });
+    }
+});
 
-        if (password === ACCESS_PASSWORD) {
-            req.session.authenticated = true; // NEU: Session-Variable setzen
-            res.status(200).json({ success: true });
-        } else {
-            res.status(401).json({ success: false, message: 'Ungültiges Passwort.' });
-        }
-    });
-
-    // POST-Route für die Karriereberatung
-    app.post('/api/career-suggestion', async (req, res) => { // authenticateToken als Middleware hinzufügen
-        try {
-            const formData = req.body;
-            // Erstelle den Prompt für das Gemini-Modell
-            const prompt = `
+// POST-Route für die Karriereberatung
+app.post('/api/career-suggestion', async (req, res) => { // authenticateToken als Middleware hinzufügen
+    try {
+        const formData = req.body;
+        // Erstelle den Prompt für das Gemini-Modell
+        const prompt = `
             Gib mir drei Berufsvorschläge, die möglichst auf folgende Interessen, Hobbies und Präferenzen abgestimmt sind.
             Ich möchte nach meinem/meiner ${formData.ausbildung} ein/eine ${formData.workPreference}.
             Das sind meine Interessen und Hobbies:
@@ -150,34 +141,34 @@ app.post('/api/career-suggestion', async (req, res) => {
             Gib nur die Namen der Berufe aus und ein kurze Beschreibung dazu.
         `;
 
-            const model = genAI.getGenerativeModel({ model: "gemma-3n-e4b-it" }); // Wähle das gewünschte Gemini-Modell
+        const model = genAI.getGenerativeModel({ model: "gemma-3n-e4b-it" }); // Wähle das gewünschte Gemini-Modell
 
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
 
-            // Sende den generierten Text zurück an das Frontend
-            res.json({ suggestion: text });
+        // Sende den generierten Text zurück an das Frontend
+        res.json({ suggestion: text });
 
-        } catch (error) {
-            console.error('Fehler bei der Gemini API-Anfrage:', error);
-            // Sende eine Fehlerantwort an das Frontend
-            res.status(500).json({ error: 'Fehler beim Abrufen des Berufsvorschlags. Bitte versuchen Sie es später erneut.' });
-        }
-    });
+    } catch (error) {
+        console.error('Fehler bei der Gemini API-Anfrage:', error);
+        // Sende eine Fehlerantwort an das Frontend
+        res.status(500).json({ error: 'Fehler beim Abrufen des Berufsvorschlags. Bitte versuchen Sie es später erneut.' });
+    }
+});
 
-    // --- Geschützte Route für das Tool-HTML ---
-    /*app.get('/career-finder', authenticateToken, (req, res) => {
-        res.sendFile(path.join(__dirname, '..', 'public', 'career-finder.html'));
-    });
-    
-    // Catch-all für 404 (optional, muss zuletzt stehen)
-    app.use((req, res) => {
-        res.status(404).sendFile(path.join(__dirname, '..', 'public', '404.html')); // Wenn du eine 404.html hast
-    });*/
+// --- Geschützte Route für das Tool-HTML ---
+/*app.get('/career-finder', authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public', 'career-finder.html'));
+});
+ 
+// Catch-all für 404 (optional, muss zuletzt stehen)
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, '..', 'public', '404.html')); // Wenn du eine 404.html hast
+});*/
 
-    // Server starten
-    app.listen(port, () => {
-        console.log(`Server läuft auf http://localhost:${port}`);
-        console.log(`Frontend verfügbar unter http://localhost:${port}`);
-    });
+// Server starten
+app.listen(port, () => {
+    console.log(`Server läuft auf http://localhost:${port}`);
+    console.log(`Frontend verfügbar unter http://localhost:${port}`);
+});
